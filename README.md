@@ -1,0 +1,1 @@
+# MeteoApp Skeleton (Android version)
