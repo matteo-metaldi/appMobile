@@ -7,9 +7,6 @@ import android.os.Handler;
 
 import ch.supsi.dti.isin.meteoapp.R;
 
-/**
- * Created by AbhiAndroid
- */
 
 public class SplashActivity extends Activity {
     Handler handler;
