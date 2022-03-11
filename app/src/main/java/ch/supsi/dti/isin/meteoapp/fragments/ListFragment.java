@@ -3,6 +3,7 @@ package ch.supsi.dti.isin.meteoapp.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.util.List;
 
 import ch.supsi.dti.isin.meteoapp.R;
@@ -57,10 +59,12 @@ public class ListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add:
-                Toast toast = Toast.makeText(getActivity(),
-                        "Add a location",
-                        Toast.LENGTH_SHORT);
-                toast.show();
+                System.out.println("ciao");
+                FragmentManager manager = getFragmentManager();
+                AddLocationFragment dialog = AddLocationFragment.newInstance();
+
+                dialog.setTargetFragment(ListFragment.this, 0);
+                dialog.show(manager, "TestDialog");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
