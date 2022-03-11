@@ -8,25 +8,19 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="231dp"
-        android:layout_height="83dp"
-        android:layout_marginStart="91dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="#00F4F3F3"
         android:capitalize="characters"
         android:clickable="false"
         android:text="Meteo App"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="140dp"
+        android:textColor="#000000"
+        android:textColorHighlight="#B5AE2E"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ImageContrastCheck"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintVertical_bias="0.7" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
