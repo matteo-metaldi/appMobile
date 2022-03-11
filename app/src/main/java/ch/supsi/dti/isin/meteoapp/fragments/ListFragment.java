@@ -65,10 +65,6 @@ public class ListFragment extends Fragment {
 
                 dialog.setTargetFragment(ListFragment.this, 0);
                 dialog.show(manager, "TestDialog");
-                Toast toast = Toast.makeText(getActivity(),
-                        "Add a location",
-                        Toast.LENGTH_SHORT);
-                toast.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
