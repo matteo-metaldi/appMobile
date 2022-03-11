@@ -24,6 +24,7 @@ public class LocationsHolder {
             Location location = new Location();
             location.setName("Location # " + i);
             mLocations.add(location);
+            mLocations.add(0,location);
         }
     }
 

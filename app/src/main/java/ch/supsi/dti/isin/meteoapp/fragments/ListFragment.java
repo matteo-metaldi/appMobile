@@ -34,8 +34,8 @@ public class ListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
-        mLocationRecyclerView = view.findViewById(R.id.recycler_view);
+        View view = inflater.inflate(R.layout.fragment_preferiti_generale, container, false);
+        mLocationRecyclerView = view.findViewById(R.id.recyclerView_generale);
         mLocationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         List<Location> locations = LocationsHolder.get(getActivity()).getLocations();
