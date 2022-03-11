@@ -8,6 +8,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/layout/fragment_add_location.xml" value="0.25" />
+        <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/layout/fragment_detail_location.xml" value="0.25" />
+        <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/layout/fragment_list.xml" value="0.2140625" />
+        <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/layout/fragment_single_fragment.xml" value="0.25" />
+        <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/menu/fragment_list.xml" value="0.25" />
         <entry key="..\:/Users/andre/Desktop/UNI_SUPSI/Anno_3/Semestre_Primaverile/SviluppoAppMobile/appMobile/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.236" />
         <entry key="..\:/Users/andre/Desktop/UNI_SUPSI/Anno_3/Semestre_Primaverile/SviluppoAppMobile/appMobile/app/src/main/res/drawable/bg_gradient.xml" value="0.2555" />
         <entry key="..\:/Users/andre/Desktop/UNI_SUPSI/Anno_3/Semestre_Primaverile/SviluppoAppMobile/appMobile/app/src/main/res/drawable/ic_baseline_transfer_within_a_station_24.xml" value="0.2555" />

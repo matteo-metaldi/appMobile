@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Locale;
 
 import ch.supsi.dti.isin.meteoapp.R;
+import ch.supsi.dti.isin.meteoapp.fragments.AddLocationFragment;
 import ch.supsi.dti.isin.meteoapp.fragments.ListFragment;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.OnReverseGeocodingListener;
