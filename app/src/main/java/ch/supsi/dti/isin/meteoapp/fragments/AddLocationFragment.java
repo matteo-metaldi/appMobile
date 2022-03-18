@@ -40,8 +40,6 @@ public class AddLocationFragment extends DialogFragment {
 
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_add_location, null);
 
-        //CalendarView calendarView = v.findViewById(R.id.calendarView);
-        //calendarView.setDate(31102000);
         TextView textArea = v.findViewById(R.id.editTextTextPersonName);
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
