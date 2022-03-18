@@ -47,7 +47,6 @@ public class ListFragment extends Fragment {
         List<Location> locations = LocationsHolder.get(getActivity()).getLocations();
         mAdapter = new LocationAdapter(locations);
         mLocationRecyclerView.setAdapter(mAdapter);
-
         return view;
     }
 
@@ -63,7 +62,6 @@ public class ListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add:
-                System.out.println("ciao");
                 FragmentManager manager = getFragmentManager();
                 AddLocationFragment dialog = AddLocationFragment.newInstance();
 
