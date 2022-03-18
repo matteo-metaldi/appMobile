@@ -3,11 +3,13 @@ package ch.supsi.dti.isin.meteoapp.fragments;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +23,6 @@ import java.util.GregorianCalendar;
 import ch.supsi.dti.isin.meteoapp.R;
 
 public class AddLocationFragment extends DialogFragment {
-    //View v = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_add_location, null);
 
     public static AddLocationFragment newInstance() {
         return new AddLocationFragment();
@@ -39,9 +40,7 @@ public class AddLocationFragment extends DialogFragment {
 
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_add_location, null);
 
-        //CalendarView calendarView = v.findViewById(R.id.calendarView);
-        //calendarView.setDate(31102000);
-
+        TextView textArea = v.findViewById(R.id.editTextTextPersonName);
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle("Aggiungi location")
@@ -49,9 +48,19 @@ public class AddLocationFragment extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                String city = textArea.getText().toString();
+                                sendResultBack(Activity.RESULT_OK, city);
                             }
                         })
                 .create();
+    }
+
+    private void sendResultBack(int resultCode, String city) {
+        if (getTargetFragment() == null) {
+            return;
+        }
+        Intent intent = new Intent();
+        intent.putExtra("return_city", city);
+        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 }

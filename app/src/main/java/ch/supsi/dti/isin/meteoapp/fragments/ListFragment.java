@@ -1,5 +1,6 @@
 package ch.supsi.dti.isin.meteoapp.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import ch.supsi.dti.isin.meteoapp.R;
@@ -26,6 +28,7 @@ import ch.supsi.dti.isin.meteoapp.model.Location;
 public class ListFragment extends Fragment {
     private RecyclerView mLocationRecyclerView;
     private LocationAdapter mAdapter;
+    private TextView mTextViewResult;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class ListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_preferiti_generale, container, false);
+        mTextViewResult = view.findViewById(R.id.textView4);
         mLocationRecyclerView = view.findViewById(R.id.recyclerView_generale);
         mLocationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -92,6 +96,16 @@ public class ListFragment extends Fragment {
         public void bind(Location location) {
             mLocation = location;
             mNameTextView.setText(mLocation.getName());
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK)
+            return;
+        if (requestCode == 0) {
+            String city = (String) data.getSerializableExtra("return_city");
+            mTextViewResult.setText(city);
         }
     }
 
