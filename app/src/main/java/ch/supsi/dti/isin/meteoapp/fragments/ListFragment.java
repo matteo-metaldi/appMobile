@@ -99,13 +99,18 @@ public class ListFragment extends Fragment {
         }
     }
 
+    //TODO: ESTRARRE DA QUA IL NOME DEL CITTA DA AGGIUNGERE
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK)
             return;
         if (requestCode == 0) {
             String city = (String) data.getSerializableExtra("return_city");
-            mTextViewResult.setText(city);
+            Location location = new Location();
+            location.setName(city);
+
+            LocationsHolder.get(getActivity()).addLocationToList(location);
+            mAdapter.notifyDataSetChanged();
         }
     }
 
