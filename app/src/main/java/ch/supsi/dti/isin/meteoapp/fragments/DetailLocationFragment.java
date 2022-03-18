@@ -40,7 +40,7 @@ public class DetailLocationFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_detail_location, container, false);
 
         mIdTextView = v.findViewById(R.id.id_textView);
-        mIdTextView.setText(mLocation.getId().toString());
+        mIdTextView.setText(mLocation.getName());
 
         return v;
     }
