@@ -1,9 +1,20 @@
 package ch.supsi.dti.isin.meteoapp.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.UUID;
 
+@Entity(tableName = "location")
 public class Location {
+
+    @PrimaryKey
+    @NonNull
     private UUID Id;
+
+    @ColumnInfo(name = "name")
     private String mName;
 
     public UUID getId() {
@@ -25,4 +36,5 @@ public class Location {
     public Location() {
         Id = UUID.randomUUID();
     }
+
 }

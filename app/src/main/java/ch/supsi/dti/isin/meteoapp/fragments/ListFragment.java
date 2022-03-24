@@ -1,5 +1,7 @@
 package ch.supsi.dti.isin.meteoapp.fragments;
 
+import static java.lang.Thread.sleep;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,10 +27,14 @@ import java.util.List;
 
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.activities.DetailActivity;
+import ch.supsi.dti.isin.meteoapp.model.LocationDatabase;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
 
 public class ListFragment extends Fragment {
+
+    private LocationDatabase db;
+
     private RecyclerView mLocationRecyclerView;
     private LocationAdapter mAdapter;
     private TextView mTextViewResult;
@@ -40,14 +49,25 @@ public class ListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_preferiti_generale, container, false);
+        //db
+        db = LocationDatabase.getInstance(requireContext());
+
         mTextViewResult = view.findViewById(R.id.textView4);
         mLocationRecyclerView = view.findViewById(R.id.recyclerView_generale);
         mLocationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        //TODO: QUERY DB E PRENDI MERDA
         List<Location> locations = LocationsHolder.get(getActivity()).getLocations();
         mAdapter = new LocationAdapter(locations);
         mLocationRecyclerView.setAdapter(mAdapter);
 
+        new Thread(() -> refreshUI()).start();
+
+        try {
+            sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return view;
     }
 
@@ -63,7 +83,6 @@ public class ListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add:
-                System.out.println("ciao");
                 FragmentManager manager = getFragmentManager();
                 AddLocationFragment dialog = AddLocationFragment.newInstance();
 
@@ -106,21 +125,23 @@ public class ListFragment extends Fragment {
             return;
         if (requestCode == 0) {
             String city = (String) data.getSerializableExtra("return_city");
-            System.out.println("///////////////////////////////////////////////////////////////////////////////////");
-            System.out.println(city.length());
-            System.out.println(city.length());
-            System.out.println(city.length());
-            System.out.println(city);
-            System.out.println(city);
-            System.out.println(city);
-            System.out.println(city.length());
             if(city.length() > 0) {
                 Location location = new Location();
                 location.setName(city);
+
+                //Persiste nel database la location
+                new Thread(() -> persistLocationToDB(location)).start();
+
                 LocationsHolder.get(getActivity()).addLocationToList(location);
-                mAdapter.notifyDataSetChanged();
+
+                new Thread(() -> refreshUI()).start();
             }
         }
+    }
+
+    //Inserisce la location nel db con un thread borgo
+    private void persistLocationToDB(Location location) {
+        db.locationDao().insertLocation(location);
     }
 
     // Adapter
@@ -148,5 +169,19 @@ public class ListFragment extends Fragment {
         public int getItemCount() {
             return mLocations.size();
         }
+
+        public void replaceLocations(List<Location> locations){
+            mLocations = locations;
+        }
+    }
+
+
+
+    private void refreshUI() {
+        List<Location> locations = db.locationDao().getLocations();
+
+        mAdapter.replaceLocations(locations);
+
+        new Handler(Looper.getMainLooper()).post(()->mAdapter.notifyDataSetChanged());
     }
 }
