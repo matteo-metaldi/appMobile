@@ -106,11 +106,20 @@ public class ListFragment extends Fragment {
             return;
         if (requestCode == 0) {
             String city = (String) data.getSerializableExtra("return_city");
-            Location location = new Location();
-            location.setName(city);
-
-            LocationsHolder.get(getActivity()).addLocationToList(location);
-            mAdapter.notifyDataSetChanged();
+            System.out.println("///////////////////////////////////////////////////////////////////////////////////");
+            System.out.println(city.length());
+            System.out.println(city.length());
+            System.out.println(city.length());
+            System.out.println(city);
+            System.out.println(city);
+            System.out.println(city);
+            System.out.println(city.length());
+            if(city.length() > 0) {
+                Location location = new Location();
+                location.setName(city);
+                LocationsHolder.get(getActivity()).addLocationToList(location);
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 

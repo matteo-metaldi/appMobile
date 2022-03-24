@@ -3,5 +3,5 @@
         android:id="@+id/menu_add"
         android:icon="@android:drawable/ic_menu_add"
         android:title="New"
-        app:showAsAction="ifRoom|withText"/>
+        app:showAsAction="ifRoom|withText" />
 </menu>
