@@ -1,5 +1,7 @@
 package ch.supsi.dti.isin.meteoapp.model;
 
+import static java.lang.Thread.sleep;
+
 import android.content.Context;
 
 import java.util.ArrayList;
@@ -11,6 +13,8 @@ import ch.supsi.dti.isin.meteoapp.fragments.ListFragment;
 public class LocationsHolder {
 
     //todo qua aggiunge il nome alla lista
+
+    private LocationDatabase db;
     private static LocationsHolder sLocationsHolder;
     private List<Location> mLocations;
 
@@ -22,12 +26,13 @@ public class LocationsHolder {
     }
 
     private LocationsHolder(Context context) {
-        mLocations = new ArrayList<>();
-        /*for (int i = 0; i < 10; i++) {
-            Location location = new Location();
-            location.setName("Location # " + i);
-            mLocations.add(location);*/
-        //}
+        db = LocationDatabase.getInstance(context);
+        new Thread(()->mLocations = db.locationDao().getLocations()).start();
+        try {
+            sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 

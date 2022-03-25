@@ -43,6 +43,7 @@ public class ListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        db = LocationDatabase.getInstance(requireContext());
     }
 
 
@@ -50,7 +51,6 @@ public class ListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_preferiti_generale, container, false);
         //db
-        db = LocationDatabase.getInstance(requireContext());
 
         mTextViewResult = view.findViewById(R.id.textView4);
         mLocationRecyclerView = view.findViewById(R.id.recyclerView_generale);
@@ -63,11 +63,7 @@ public class ListFragment extends Fragment {
 
         new Thread(() -> refreshUI()).start();
 
-        try {
-            sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        mAdapter.notifyDataSetChanged();
         return view;
     }
 
@@ -133,10 +129,10 @@ public class ListFragment extends Fragment {
                 new Thread(() -> persistLocationToDB(location)).start();
 
                 LocationsHolder.get(getActivity()).addLocationToList(location);
-
                 new Thread(() -> refreshUI()).start();
             }
         }
+        mAdapter.notifyDataSetChanged();
     }
 
     //Inserisce la location nel db con un thread borgo
@@ -182,6 +178,6 @@ public class ListFragment extends Fragment {
 
         mAdapter.replaceLocations(locations);
 
-        new Handler(Looper.getMainLooper()).post(()->mAdapter.notifyDataSetChanged());
+        //new Handler(Looper.getMainLooper()).post(()->mAdapter.notifyDataSetChanged());
     }
 }
