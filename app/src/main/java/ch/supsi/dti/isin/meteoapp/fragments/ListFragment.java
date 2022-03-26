@@ -2,26 +2,48 @@ package ch.supsi.dti.isin.meteoapp.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.ParseException;
-import java.util.Date;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Objects;
 
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.activities.DetailActivity;
+import ch.supsi.dti.isin.meteoapp.activities.MainActivity;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
 
@@ -29,6 +51,11 @@ public class ListFragment extends Fragment {
     private RecyclerView mLocationRecyclerView;
     private LocationAdapter mAdapter;
     private TextView mTextViewResult;
+    private ImageView imageView;
+    // TextView tvResult;
+    private final String url = "https://api.openweathermap.org/data/2.5/weather";
+    private final String appId = "e156fc1592d15fd93d5e9c27c6fec654";
+    DecimalFormat df = new DecimalFormat("#.##");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +74,8 @@ public class ListFragment extends Fragment {
         List<Location> locations = LocationsHolder.get(getActivity()).getLocations();
         mAdapter = new LocationAdapter(locations);
         mLocationRecyclerView.setAdapter(mAdapter);
+
+        imageView = view.findViewById(R.id.imageView);
         return view;
     }
 
@@ -103,9 +132,10 @@ public class ListFragment extends Fragment {
             return;
         if (requestCode == 0) {
             String city = (String) data.getSerializableExtra("return_city");
-            mTextViewResult.setText(city);
         }
     }
+
+
 
     // Adapter
 
