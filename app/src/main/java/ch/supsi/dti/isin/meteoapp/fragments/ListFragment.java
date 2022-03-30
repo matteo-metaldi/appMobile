@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,12 +39,26 @@ public class ListFragment extends Fragment {
     private RecyclerView mLocationRecyclerView;
     private LocationAdapter mAdapter;
     private TextView mTextViewResult;
-
+    boolean list_empty = true;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         db = LocationDatabase.getInstance(requireContext());
+
+        new Thread(()->list_empty = db.locationDao().getLocations().isEmpty()).start();
+        try {
+            sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if(list_empty) {
+            new Thread(() -> persistLocationToDB(new Location("Rome"))).start();
+            new Thread(() -> persistLocationToDB(new Location("Paris"))).start();
+            new Thread(() -> persistLocationToDB(new Location("Berlin"))).start();
+            new Thread(() -> persistLocationToDB(new Location("Stockholm"))).start();
+        }
+
     }
 
 
@@ -56,14 +71,22 @@ public class ListFragment extends Fragment {
         mLocationRecyclerView = view.findViewById(R.id.recyclerView_generale);
         mLocationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        //TODO: QUERY DB E PRENDI MERDA
+        //TODO: QUERY DB E PRENDI
         List<Location> locations = LocationsHolder.get(getActivity()).getLocations();
         mAdapter = new LocationAdapter(locations);
         mLocationRecyclerView.setAdapter(mAdapter);
 
         new Thread(() -> refreshUI()).start();
 
+        try {
+            sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         mAdapter.notifyDataSetChanged();
+
+
         return view;
     }
 
@@ -94,12 +117,14 @@ public class ListFragment extends Fragment {
 
     private class LocationHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mNameTextView;
+        private Button mButtonView;
         private Location mLocation;
 
         public LocationHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item, parent, false));
             itemView.setOnClickListener(this);
             mNameTextView = itemView.findViewById(R.id.name);
+            mButtonView = itemView.findViewById(R.id.button2);
         }
 
         @Override
@@ -111,6 +136,19 @@ public class ListFragment extends Fragment {
         public void bind(Location location) {
             mLocation = location;
             mNameTextView.setText(mLocation.getName());
+            mButtonView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    new Thread(() -> removeLocationFromDB(mLocation)).start();
+                    try {
+                        sleep(400);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    mAdapter.notifyDataSetChanged();
+                }
+            });
         }
     }
 
@@ -179,5 +217,10 @@ public class ListFragment extends Fragment {
         mAdapter.replaceLocations(locations);
 
         //new Handler(Looper.getMainLooper()).post(()->mAdapter.notifyDataSetChanged());
+    }
+
+    private void removeLocationFromDB(Location mLocation){
+        db.locationDao().deleteLocation(mLocation);
+        refreshUI();
     }
 }

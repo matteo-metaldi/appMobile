@@ -16,20 +16,20 @@ public class LocationsHolder {
 
     private LocationDatabase db;
     private static LocationsHolder sLocationsHolder;
-    private List<Location> mLocations;
+    private List<Location> mLocations = new ArrayList<>();
 
     public static LocationsHolder get(Context context) {
         if (sLocationsHolder == null)
             sLocationsHolder = new LocationsHolder(context);
-
         return sLocationsHolder;
     }
 
     private LocationsHolder(Context context) {
         db = LocationDatabase.getInstance(context);
+
         new Thread(()->mLocations = db.locationDao().getLocations()).start();
         try {
-            sleep(100);
+            sleep(400);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

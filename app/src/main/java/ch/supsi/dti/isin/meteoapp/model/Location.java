@@ -3,6 +3,7 @@ package ch.supsi.dti.isin.meteoapp.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.UUID;
@@ -37,4 +38,9 @@ public class Location {
         Id = UUID.randomUUID();
     }
 
+    @Ignore
+    public Location(String nmae) {
+        mName = nmae;
+        Id = UUID.randomUUID();
+    }
 }
