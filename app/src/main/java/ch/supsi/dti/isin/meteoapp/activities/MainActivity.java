@@ -34,7 +34,7 @@ import io.nlopez.smartlocation.location.config.LocationParams;
 public class MainActivity extends AppCompatActivity {
     private Context context;
     private static final String TAG = "SML_test";
-
+    private static ch.supsi.dti.isin.meteoapp.model.Location currentLocation = new ch.supsi.dti.isin.meteoapp.model.Location();
     private LocationDatabase db;
 
     @Override
@@ -69,8 +69,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public ch.supsi.dti.isin.meteoapp.model.Location startLocationListener() {
-        ch.supsi.dti.isin.meteoapp.model.Location location2 = new ch.supsi.dti.isin.meteoapp.model.Location();
+    public void startLocationListener() {
         long mLocTrackingInterval = 1000 * 60; // 5 sec
         float trackingDistance = 0;
         LocationAccuracy trackingAccuracy = LocationAccuracy.HIGH;
@@ -98,19 +97,22 @@ public class MainActivity extends AppCompatActivity {
                             String stateName = addresses.get(0).getAddressLine(1);
                             String countryName = addresses.get(0).getAddressLine(2);
 
-                            //Toast.makeText(context,lat+" "+lon+" "+cityName+"-"+"-"+stateName+"-"+countryName,Toast.LENGTH_LONG).show();
-
-                            Log.i(TAG, "Location:=" + cityName);
-                            ch.supsi.dti.isin.meteoapp.model.Location location1 = new ch.supsi.dti.isin.meteoapp.model.Location();
-                            location1.setName(cityName);
-                            location2.setName(cityName);
-                            System.out.println(location2.getName());
+                            currentLocation.setName(cityName);
+                            return;
                         } catch (IOException ex) {
 
                         }
                     }
                 });
-        return location2;
+        System.out.println(currentLocation.getName());
+        System.out.println(currentLocation.getName());
+        System.out.println(currentLocation.getName());
+        System.out.println(currentLocation.getName());
+        System.out.println(currentLocation.getName());
+        System.out.println(currentLocation.getName());
+        System.out.println(currentLocation.getName());
+        System.out.println(currentLocation.getName());
+        System.out.println(currentLocation.getName());
     }
 
     private void requestPermissions() {
@@ -130,5 +132,9 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         }
+    }
+
+    public static ch.supsi.dti.isin.meteoapp.model.Location getCurrentLocation() {
+        return currentLocation;
     }
 }

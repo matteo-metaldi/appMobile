@@ -4,48 +4,23 @@ import static java.lang.Thread.sleep;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
-import android.os.Looper;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Objects;
 
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.activities.DetailActivity;
@@ -62,10 +37,6 @@ public class ListFragment extends Fragment {
     private LocationAdapter mAdapter;
     private TextView mTextViewResult;
     boolean list_empty = true;
-    // TextView tvResult;
-    private final String url = "https://api.openweathermap.org/data/2.5/weather";
-    private final String appId = "e156fc1592d15fd93d5e9c27c6fec654";
-    DecimalFormat df = new DecimalFormat("#.##");
     private TextView currentLocation;
     private MainActivity mainActivity;
 
@@ -126,8 +97,7 @@ public class ListFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_list, menu);
-        System.out.println(mainActivity.startLocationListener().getName());
-        currentLocation.setText(mainActivity.startLocationListener().getName());
+        //currentLocation.setText(mainActivity.get);
     }
 
     @Override
@@ -161,7 +131,7 @@ public class ListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Intent intent = DetailActivity.newIntent(getActivity(), mLocation.getId());
+            Intent intent = DetailActivity.newIntent(getActivity(), mLocation.getId(), mLocation.getName(), mLocation.getName());
             startActivity(intent);
         }
 

@@ -15,8 +15,12 @@ import ch.supsi.dti.isin.meteoapp.fragments.DetailLocationFragment;
 
 public class DetailActivity extends AppCompatActivity {
     private static final String EXTRA_LOCATION_ID = "ch.supsi.dti.isin.meteoapp.location_id";
+    private static String cityName;
+    private static String countryName;
 
-    public static Intent newIntent(Context packageContext, UUID locationId) {
+    public static Intent newIntent(Context packageContext, UUID locationId, String name, String country) {
+        cityName = name;
+        countryName = country;
         Intent intent = new Intent(packageContext, DetailActivity.class);
         intent.putExtra(EXTRA_LOCATION_ID, locationId);
         return intent;
@@ -31,7 +35,7 @@ public class DetailActivity extends AppCompatActivity {
 
         if (fragment == null) {
             UUID locationId = (UUID) getIntent().getSerializableExtra(EXTRA_LOCATION_ID);
-            fragment = new DetailLocationFragment().newInstance(locationId);
+            fragment = new DetailLocationFragment().newInstance(locationId, cityName, countryName);
             fm.beginTransaction()
                     .add(R.id.fragment_container, fragment)
                     .commit();
