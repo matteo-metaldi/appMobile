@@ -83,10 +83,10 @@ public class ListFragment extends Fragment {
             e.printStackTrace();
         }
         if(list_empty) {
-            new Thread(() -> persistLocationToDB(new Location("Rome"))).start();
-            new Thread(() -> persistLocationToDB(new Location("Paris"))).start();
-            new Thread(() -> persistLocationToDB(new Location("Berlin"))).start();
-            new Thread(() -> persistLocationToDB(new Location("Stockholm"))).start();
+            new Thread(() -> persistLocationToDB(new Location("Rome","Italy"))).start();
+            new Thread(() -> persistLocationToDB(new Location("Paris","France"))).start();
+            new Thread(() -> persistLocationToDB(new Location("Berlin","Germany"))).start();
+            new Thread(() -> persistLocationToDB(new Location("Stockholm","Sweden"))).start();
         }
 
     }
@@ -162,6 +162,7 @@ public class ListFragment extends Fragment {
         @Override
         public void onClick(View view) {
             Intent intent = DetailActivity.newIntent(getActivity(), mLocation.getId());
+
             startActivity(intent);
         }
 
@@ -191,10 +192,12 @@ public class ListFragment extends Fragment {
             return;
         if (requestCode == 0) {
             String city = (String) data.getSerializableExtra("return_city");
+            String country = (String) data.getSerializableExtra("return_country");
             if(city.length() > 0) {
                 Location location = new Location();
                 location.setName(city);
-
+                location.setCountry(country);
+                
                 //Persiste nel database la location
                 new Thread(() -> persistLocationToDB(location)).start();
 

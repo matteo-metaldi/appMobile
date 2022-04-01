@@ -18,6 +18,9 @@ public class Location {
     @ColumnInfo(name = "name")
     private String mName;
 
+    @ColumnInfo(name = "country")
+    private String mCountry;
+
     public UUID getId() {
         return Id;
     }
@@ -34,13 +37,23 @@ public class Location {
         mName = name;
     }
 
+    public String getCountry() {
+        return mCountry;
+    }
+
+    public void setCountry(String mCountry) {
+        this.mCountry = mCountry;
+    }
+
     public Location() {
         Id = UUID.randomUUID();
     }
 
     @Ignore
-    public Location(String nmae) {
+    public Location(String nmae,String country) {
         mName = nmae;
+        mCountry = country;
         Id = UUID.randomUUID();
     }
+
 }

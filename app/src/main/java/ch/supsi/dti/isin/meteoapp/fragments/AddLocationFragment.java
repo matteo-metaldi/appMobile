@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,8 @@ import ch.supsi.dti.isin.meteoapp.R;
 
 public class AddLocationFragment extends DialogFragment {
 
+    private AlertDialog alertDialog;
+
     public static AddLocationFragment newInstance() {
         return new AddLocationFragment();
     }
@@ -40,29 +44,37 @@ public class AddLocationFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        View v = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_add_location, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        // Get the layout inflater
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
 
-        TextView textAreaCity = v.findViewById(R.id.textCity);
-        TextView textAreaCountry = v.findViewById(R.id.textCountry);
-        return new AlertDialog.Builder(Objects.requireNonNull(getActivity()))
-                .setView(v)
-                .setTitle("Aggiungi location")
-                .setPositiveButton(android.R.string.ok,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String city = textAreaCity.getText().toString();
-                                String country = textAreaCountry.getText().toString();
-                                if(!city.equals("") && !country.equals("")){
-                                    sendResultBack(Activity.RESULT_OK, city, country);
-                                }else{
-                                    Toast toast = new Toast(getContext());
-                                    toast.setText("Error");
-                                    toast.show();
-                                }
-                            }
-                        })
-                .create();
+        View v = inflater.inflate(R.layout.citycountry_dialog, null);
+        EditText textAreaCity = v.findViewById(R.id.city);
+        EditText textAreaCountry = v.findViewById(R.id.country);
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(v)
+                // Add action buttons
+                .setPositiveButton(R.string.signin, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // sign in the user ...
+                        if(!textAreaCity.getText().toString().equals("") && !textAreaCountry.getText().toString().equals("")){
+                            sendResultBack(Activity.RESULT_OK, textAreaCity.getText().toString(), textAreaCountry.getText().toString());
+                        }else{
+                            Toast toast = new Toast(getContext());
+                            toast.setText("Campo mancante nel form");
+                            toast.show();
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //LoginDialogFragment.this.getDialog().cancel();
+                    }
+                });
+        return builder.create();
     }
 
     private void sendResultBack(int resultCode, String city, String country) {

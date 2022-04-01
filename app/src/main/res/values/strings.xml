@@ -2,4 +2,6 @@
     <string name="app_name">MeteoApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="signin">Conferma</string>
+    <string name="cancel">Annulla</string>
 </resources>
