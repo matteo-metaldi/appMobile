@@ -8,6 +8,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -31,6 +33,7 @@ import io.nlopez.smartlocation.location.config.LocationParams;
 public class MainActivity extends AppCompatActivity {
     private Context context;
     private static final String TAG = "SML_test";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -61,8 +64,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void startLocationListener() {
-        long mLocTrackingInterval = 1000 * 5; // 5 sec
+    public ch.supsi.dti.isin.meteoapp.model.Location startLocationListener() {
+        ch.supsi.dti.isin.meteoapp.model.Location location2 = new ch.supsi.dti.isin.meteoapp.model.Location();
+        long mLocTrackingInterval = 1000 * 60; // 5 sec
         float trackingDistance = 0;
         LocationAccuracy trackingAccuracy = LocationAccuracy.HIGH;
 
@@ -91,13 +95,17 @@ public class MainActivity extends AppCompatActivity {
 
                             //Toast.makeText(context,lat+" "+lon+" "+cityName+"-"+"-"+stateName+"-"+countryName,Toast.LENGTH_LONG).show();
 
-                            Log.i(TAG,"Location:=" + cityName);
-                        }catch (IOException ex){
+                            Log.i(TAG, "Location:=" + cityName);
+                            ch.supsi.dti.isin.meteoapp.model.Location location1 = new ch.supsi.dti.isin.meteoapp.model.Location();
+                            location1.setName(cityName);
+                            location2.setName(cityName);
+                            System.out.println(location2.getName());
+                        } catch (IOException ex) {
 
                         }
-                        // Log.i(TAG, "Location" + location);
                     }
                 });
+        return location2;
     }
 
     private void requestPermissions() {

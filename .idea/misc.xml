@@ -9,10 +9,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/layout/fragment_add_location.xml" value="0.25" />
-        <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/layout/fragment_detail_location.xml" value="0.25" />
+        <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/layout/fragment_detail_location.xml" value="0.536" />
         <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/layout/fragment_list.xml" value="0.2140625" />
         <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/layout/fragment_preferiti_generale.xml" value="0.2246376811594203" />
         <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/layout/fragment_single_fragment.xml" value="0.25" />
+        <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/layout/fragment_splash.xml" value="0.1" />
+        <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/layout/list_item.xml" value="0.2246376811594203" />
+        <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/layout/prova.xml" value="0.1921875" />
         <entry key="..\:/Users/Matteo/Desktop/SUPSI/2°Semestre/AppMobile/appMobile/app/src/main/res/menu/fragment_list.xml" value="0.25" />
         <entry key="..\:/Users/andre/Desktop/UNI_SUPSI/Anno_3/Semestre_Primaverile/SviluppoAppMobile/appMobile/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.236" />
         <entry key="..\:/Users/andre/Desktop/UNI_SUPSI/Anno_3/Semestre_Primaverile/SviluppoAppMobile/appMobile/app/src/main/res/drawable/bg_gradient.xml" value="0.2555" />

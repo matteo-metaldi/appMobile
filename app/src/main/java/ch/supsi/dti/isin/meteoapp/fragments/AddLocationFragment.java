@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +20,7 @@ import androidx.fragment.app.DialogFragment;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 import ch.supsi.dti.isin.meteoapp.R;
 
@@ -40,27 +42,36 @@ public class AddLocationFragment extends DialogFragment {
 
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_add_location, null);
 
-        TextView textArea = v.findViewById(R.id.editTextTextPersonName);
-        return new AlertDialog.Builder(getActivity())
+        TextView textAreaCity = v.findViewById(R.id.textCity);
+        TextView textAreaCountry = v.findViewById(R.id.textCountry);
+        return new AlertDialog.Builder(Objects.requireNonNull(getActivity()))
                 .setView(v)
                 .setTitle("Aggiungi location")
                 .setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                String city = textArea.getText().toString();
-                                sendResultBack(Activity.RESULT_OK, city);
+                                String city = textAreaCity.getText().toString();
+                                String country = textAreaCountry.getText().toString();
+                                if(!city.equals("") && !country.equals("")){
+                                    sendResultBack(Activity.RESULT_OK, city, country);
+                                }else{
+                                    Toast toast = new Toast(getContext());
+                                    toast.setText("Error");
+                                    toast.show();
+                                }
                             }
                         })
                 .create();
     }
 
-    private void sendResultBack(int resultCode, String city) {
+    private void sendResultBack(int resultCode, String city, String country) {
         if (getTargetFragment() == null) {
             return;
         }
         Intent intent = new Intent();
         intent.putExtra("return_city", city);
+        intent.putExtra("return_country", country);
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 }
