@@ -28,6 +28,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_single_fragment);
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+
         if (fragment == null) {
             UUID locationId = (UUID) getIntent().getSerializableExtra(EXTRA_LOCATION_ID);
             fragment = new DetailLocationFragment().newInstance(locationId);

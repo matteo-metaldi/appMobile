@@ -24,6 +24,7 @@ import java.util.Locale;
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.fragments.AddLocationFragment;
 import ch.supsi.dti.isin.meteoapp.fragments.ListFragment;
+import ch.supsi.dti.isin.meteoapp.model.LocationDatabase;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.OnReverseGeocodingListener;
 import io.nlopez.smartlocation.SmartLocation;
@@ -34,12 +35,16 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private static final String TAG = "SML_test";
 
+    private LocationDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         /*Setta il layout che l'activity è in realta un fragment grasso*/
         setContentView(R.layout.fragment_single_fragment);
+
+        db = LocationDatabase.getInstance(this);
 
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "Permission not granted");
