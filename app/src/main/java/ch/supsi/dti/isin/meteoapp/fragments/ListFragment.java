@@ -50,32 +50,31 @@ import ch.supsi.dti.isin.meteoapp.model.Location;
 public class ListFragment extends Fragment {
     private RecyclerView mLocationRecyclerView;
     private LocationAdapter mAdapter;
-    private TextView mTextViewResult;
-    private ImageView imageView;
     // TextView tvResult;
     private final String url = "https://api.openweathermap.org/data/2.5/weather";
     private final String appId = "e156fc1592d15fd93d5e9c27c6fec654";
     DecimalFormat df = new DecimalFormat("#.##");
+    private TextView currentLocation;
+    private MainActivity mainActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mainActivity = (MainActivity) getActivity();
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_preferiti_generale, container, false);
-        mTextViewResult = view.findViewById(R.id.textView4);
         mLocationRecyclerView = view.findViewById(R.id.recyclerView_generale);
         mLocationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        currentLocation = view.findViewById(R.id.currentLocation);
         List<Location> locations = LocationsHolder.get(getActivity()).getLocations();
         mAdapter = new LocationAdapter(locations);
         mLocationRecyclerView.setAdapter(mAdapter);
-
-        imageView = view.findViewById(R.id.imageView);
         return view;
     }
 
@@ -85,6 +84,8 @@ public class ListFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_list, menu);
+        System.out.println(mainActivity.startLocationListener().getName());
+        currentLocation.setText(mainActivity.startLocationListener().getName());
     }
 
     @Override
@@ -134,6 +135,8 @@ public class ListFragment extends Fragment {
             String city = (String) data.getSerializableExtra("return_city");
         }
     }
+
+
 
 
 

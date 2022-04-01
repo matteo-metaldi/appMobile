@@ -33,6 +33,7 @@ import io.nlopez.smartlocation.location.config.LocationParams;
 public class MainActivity extends AppCompatActivity {
     private Context context;
     private static final String TAG = "SML_test";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -63,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void startLocationListener() {
+    public ch.supsi.dti.isin.meteoapp.model.Location startLocationListener() {
+        ch.supsi.dti.isin.meteoapp.model.Location location2 = new ch.supsi.dti.isin.meteoapp.model.Location();
         long mLocTrackingInterval = 1000 * 60; // 5 sec
         float trackingDistance = 0;
         LocationAccuracy trackingAccuracy = LocationAccuracy.HIGH;
@@ -93,15 +95,17 @@ public class MainActivity extends AppCompatActivity {
 
                             //Toast.makeText(context,lat+" "+lon+" "+cityName+"-"+"-"+stateName+"-"+countryName,Toast.LENGTH_LONG).show();
 
-                            Log.i(TAG,"Location:=" + cityName);
+                            Log.i(TAG, "Location:=" + cityName);
                             ch.supsi.dti.isin.meteoapp.model.Location location1 = new ch.supsi.dti.isin.meteoapp.model.Location();
                             location1.setName(cityName);
-                            //View view = inflater.inflate(R.layout.fragment_preferiti_generale, container, false)
-                        }catch (IOException ex){
+                            location2.setName(cityName);
+                            System.out.println(location2.getName());
+                        } catch (IOException ex) {
 
                         }
                     }
                 });
+        return location2;
     }
 
     private void requestPermissions() {
