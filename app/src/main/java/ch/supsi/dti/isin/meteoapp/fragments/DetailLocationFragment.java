@@ -94,7 +94,7 @@ public class DetailLocationFragment extends Fragment {
         if (city.equals("")) {
             //mTextViewResult.setText("City field can not be empty!");
         } else {
-            tempUrl = url + "?q=" + city + "&appid=" + appId;
+            tempUrl = url + "?q=" + city + "," + countryName + "&appid=" + appId;
             StringRequest stringRequest = new StringRequest(Request.Method.POST, tempUrl, new Response.Listener<String>() {
                 @SuppressLint("SetTextI18n")
                 @Override

@@ -37,7 +37,7 @@ public class ListFragment extends Fragment {
     private LocationAdapter mAdapter;
     private TextView mTextViewResult;
     boolean list_empty = true;
-    private TextView currentLocation;
+    private static TextView currentLocation;
     private MainActivity mainActivity;
 
     @Override
@@ -60,6 +60,10 @@ public class ListFragment extends Fragment {
             new Thread(() -> persistLocationToDB(new Location("Stockholm","Sweden"))).start();
         }
 
+    }
+
+    public static void setName(String name){
+        currentLocation.setText(name);
     }
 
 
@@ -97,7 +101,6 @@ public class ListFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_list, menu);
-        //currentLocation.setText(mainActivity.get);
     }
 
     @Override
@@ -131,7 +134,7 @@ public class ListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Intent intent = DetailActivity.newIntent(getActivity(), mLocation.getId(), mLocation.getName(), mLocation.getName());
+            Intent intent = DetailActivity.newIntent(getActivity(), mLocation.getId(), mLocation.getName(), mLocation.getCountry());
             startActivity(intent);
         }
 

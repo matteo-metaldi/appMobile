@@ -93,26 +93,20 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             Geocoder geocoder = new Geocoder(context, Locale.getDefault());
                             List<Address> addresses = geocoder.getFromLocation(lat, lon, 1);
-                            String cityName = addresses.get(0).getAddressLine(0);
-                            String stateName = addresses.get(0).getAddressLine(1);
-                            String countryName = addresses.get(0).getAddressLine(2);
+                            String addressComplete = addresses.get(0).getAddressLine(0);
+                            String[] addressSplit = addressComplete.split(",");
 
-                            currentLocation.setName(cityName);
-                            return;
+                            String countryName = addressSplit[3].trim();
+                            String[] cityPlusZipCode = addressSplit[2].split(" ");
+
+                            String cityName = cityPlusZipCode[2].trim();
+
+                            ListFragment.setName(cityName);
                         } catch (IOException ex) {
 
                         }
                     }
                 });
-        System.out.println(currentLocation.getName());
-        System.out.println(currentLocation.getName());
-        System.out.println(currentLocation.getName());
-        System.out.println(currentLocation.getName());
-        System.out.println(currentLocation.getName());
-        System.out.println(currentLocation.getName());
-        System.out.println(currentLocation.getName());
-        System.out.println(currentLocation.getName());
-        System.out.println(currentLocation.getName());
     }
 
     private void requestPermissions() {
