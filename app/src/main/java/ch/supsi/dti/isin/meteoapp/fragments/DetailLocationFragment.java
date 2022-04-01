@@ -49,13 +49,16 @@ public class DetailLocationFragment extends Fragment {
     // TextView tvResult;
     private final String url = "https://api.openweathermap.org/data/2.5/weather";
     private final String appId = "e156fc1592d15fd93d5e9c27c6fec654";
+    private static String cityName;
+    private static String countryName;
     DecimalFormat df = new DecimalFormat("#.#");
 
-    public static DetailLocationFragment newInstance(UUID locationId) {
+    public static DetailLocationFragment newInstance(UUID locationId, String city, String country) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_LOCATION_ID, locationId);
-
         DetailLocationFragment fragment = new DetailLocationFragment();
+        cityName = city;
+        countryName = country;
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,7 +90,7 @@ public class DetailLocationFragment extends Fragment {
     private void setInformation() {
         //String city = (String) data.getSerializableExtra("return_city");
         String tempUrl = "";
-        String city = "New York";
+        String city = cityName;
         if (city.equals("")) {
             //mTextViewResult.setText("City field can not be empty!");
         } else {
