@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             Geocoder geocoder = new Geocoder(context, Locale.getDefault());
                             List<Address> addresses = geocoder.getFromLocation(lat, lon, 1);
+
                             String addressComplete = addresses.get(0).getAddressLine(0);
                             String[] addressSplit = addressComplete.split(",");
 
@@ -100,8 +101,13 @@ public class MainActivity extends AppCompatActivity {
                             String[] cityPlusZipCode = addressSplit[2].split(" ");
 
                             String cityName = cityPlusZipCode[2].trim();
+                            currentLocation.setName(cityName);
+                            currentLocation.setCountry(countryName);
 
-                            ListFragment.setName(cityName);
+
+                            //Non ha senso ma spero
+                            new Thread(() -> ListFragment.listFragment.refreshUI()).start();
+                            return;
                         } catch (IOException ex) {
 
                         }

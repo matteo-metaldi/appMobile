@@ -3,6 +3,7 @@ package ch.supsi.dti.isin.meteoapp.fragments;
 import static java.lang.Thread.sleep;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.sql.SQLOutput;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -31,10 +33,10 @@ import ch.supsi.dti.isin.meteoapp.model.Location;
 
 public class ListFragment extends Fragment {
 
-    private LocationDatabase db;
-
+    private static LocationDatabase db;
+    public static ListFragment listFragment;
     private RecyclerView mLocationRecyclerView;
-    private LocationAdapter mAdapter;
+    private static LocationAdapter mAdapter;
     private TextView mTextViewResult;
     boolean list_empty = true;
     private static TextView currentLocation;
@@ -46,7 +48,7 @@ public class ListFragment extends Fragment {
         setHasOptionsMenu(true);
         mainActivity = (MainActivity) getActivity();
         db = LocationDatabase.getInstance(requireContext());
-
+        listFragment = this;
         new Thread(()->list_empty = db.locationDao().getLocations().isEmpty()).start();
         try {
             sleep(400);
@@ -77,6 +79,7 @@ public class ListFragment extends Fragment {
         mLocationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         currentLocation = view.findViewById(R.id.currentLocation);
+
         List<Location> locations = LocationsHolder.get(getActivity()).getLocations();
         mAdapter = new LocationAdapter(locations);
         mLocationRecyclerView.setAdapter(mAdapter);
@@ -119,7 +122,6 @@ public class ListFragment extends Fragment {
     }
 
     // Holder
-
     private class LocationHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mNameTextView;
         private Button mButtonView;
@@ -174,6 +176,13 @@ public class ListFragment extends Fragment {
                 new Thread(() -> persistLocationToDB(location)).start();
 
                 LocationsHolder.get(getActivity()).addLocationToList(location);
+
+                try {
+                    sleep(400);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 new Thread(() -> refreshUI()).start();
             }
         }
@@ -218,8 +227,22 @@ public class ListFragment extends Fragment {
 
 
 
-    private void refreshUI() {
+    public void refreshUI() {
         List<Location> locations = db.locationDao().getLocations();
+
+        Location current = MainActivity.getCurrentLocation();
+
+        //textview
+        currentLocation.setText(current.getName());
+        currentLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = DetailActivity.newIntent(getActivity(), current.getId(), current.getName(), current.getCountry());
+                startActivity(intent);
+            }
+        });
+
 
         mAdapter.replaceLocations(locations);
 
@@ -230,4 +253,5 @@ public class ListFragment extends Fragment {
         db.locationDao().deleteLocation(mLocation);
         refreshUI();
     }
+
 }
