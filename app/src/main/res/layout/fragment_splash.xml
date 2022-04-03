@@ -13,14 +13,16 @@
         android:background="#00F4F3F3"
         android:capitalize="characters"
         android:clickable="false"
+        android:fontFamily="sans-serif-black"
         android:text="Meteo App"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="#000000"
         android:textColorHighlight="#B5AE2E"
+        android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintVertical_bias="0.554" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
