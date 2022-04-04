@@ -2,31 +2,39 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
         android:text="Aggiungi nuova Location"
+        android:textColor="#000000"
         android:textSize="28sp"
-        />
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/city"
-        android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginLeft="4dp"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        android:hint="Inserisci nome citta" />
+        android:hint="Inserisci nome citta"
+        android:inputType="textEmailAddress"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/country"
-        android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginLeft="4dp"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        android:hint="Inserisci nome stato" />
+        android:hint="Inserisci nome stato"
+        android:inputType="textEmailAddress"
+        android:textAllCaps="false"
+        android:textStyle="bold" />
 </LinearLayout>

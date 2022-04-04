@@ -1,6 +1,7 @@
 package ch.supsi.dti.isin.meteoapp.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -51,6 +52,7 @@ public class DetailLocationFragment extends Fragment {
     private final String appId = "e156fc1592d15fd93d5e9c27c6fec654";
     private static String cityName;
     private static String countryName;
+    private String temperAttuale;
     DecimalFormat df = new DecimalFormat("#.#");
 
     public static DetailLocationFragment newInstance(UUID locationId, String city, String country) {
@@ -62,6 +64,7 @@ public class DetailLocationFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,11 +86,11 @@ public class DetailLocationFragment extends Fragment {
         windSpeed = v.findViewById(R.id.id_wind_data);
         humidityText = v.findViewById(R.id.id_umidity_data);
         pressureText = v.findViewById(R.id.id_pressure_data);
-        setInformation();
+        setInformation(null,0);
         return v;
     }
 
-    private void setInformation() {
+    public void setInformation(Context notiContext,int flag) {
         //String city = (String) data.getSerializableExtra("return_city");
         String tempUrl = "";
         String city = cityName;
@@ -104,8 +107,10 @@ public class DetailLocationFragment extends Fragment {
                         JSONArray jsonArray = jsonResponse.getJSONArray("weather");
                         JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
                         String idIcon = jsonObjectWeather.getString("icon");
-                        Picasso.with(getContext()).load("https://openweathermap.org/img/wn/" + idIcon + "@2x.png")
-                                .into(imageView);
+                        if(flag != 1) {
+                            Picasso.with(getContext()).load("https://openweathermap.org/img/wn/" + idIcon + "@2x.png")
+                                    .into(imageView);
+                        }
                         JSONObject jsonObjectMain = jsonResponse.getJSONObject("main");
                         double temp = jsonObjectMain.getDouble("temp") - 273.15;
                         double tempMin = jsonObjectMain.getDouble("temp_min") - 273.15;
@@ -118,13 +123,15 @@ public class DetailLocationFragment extends Fragment {
                         String countryName = jsonObjectSys.getString("country");
                         String cityName = jsonResponse.getString("name");
 
-                        mIdTextView.setText(cityName + "(" + countryName + ")");
-                        tempAttuale.setText(df.format(temp) + "°C");
-                        tempMinMax.setText(df.format(tempMin) + " °C / " + df.format(tempMax) + "°C");
-                        windSpeed.setText(wind + "m/s");
-                        humidityText.setText(humidity + "%");
-                        pressureText.setText(pressure + " hPa");
-
+                        temperAttuale = Double.toString(temp);
+                        if(flag != 1) {
+                            mIdTextView.setText(cityName + "(" + countryName + ")");
+                            tempAttuale.setText(df.format(temp) + "°C");
+                            tempMinMax.setText(df.format(tempMin) + " °C / " + df.format(tempMax) + "°C");
+                            windSpeed.setText(wind + "m/s");
+                            humidityText.setText(humidity + "%");
+                            pressureText.setText(pressure + " hPa");
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -136,9 +143,20 @@ public class DetailLocationFragment extends Fragment {
                     Toast.makeText(getContext(), error.toString().trim(), Toast.LENGTH_SHORT).show();
                 }
             });
-            RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
-            requestQueue.add(stringRequest);
+
+            if(flag == 1){
+                RequestQueue requestQueue = Volley.newRequestQueue(notiContext);
+                requestQueue.add(stringRequest);
+            }else {
+                RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
+                requestQueue.add(stringRequest);
+            }
+
         }
+    }
+
+    public String getTempAttuale() {
+        return temperAttuale;
     }
 }
 

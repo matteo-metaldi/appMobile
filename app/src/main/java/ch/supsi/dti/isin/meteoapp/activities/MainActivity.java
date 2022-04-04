@@ -1,6 +1,8 @@
 package ch.supsi.dti.isin.meteoapp.activities;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -16,11 +18,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
+import ch.supsi.dti.isin.meteoapp.NotificationWorker;
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.fragments.AddLocationFragment;
 import ch.supsi.dti.isin.meteoapp.fragments.ListFragment;
@@ -67,6 +74,19 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.fragment_container, fragment)
                     .commit();
         }
+
+        //Gestione notifiche
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("default", "TEST_CHANNEL", NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("Test Channel Description");
+            mNotificationManager.createNotificationChannel(channel);
+        }
+
+        PeriodicWorkRequest periodicRequest = new PeriodicWorkRequest.Builder(NotificationWorker.class, 15, TimeUnit.MINUTES).build();
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork("POLL WORK", ExistingPeriodicWorkPolicy.KEEP, periodicRequest);
+
     }
 
     public void startLocationListener() {
@@ -105,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
                             currentLocation.setCountry(countryName);
 
 
-                            //Non ha senso ma spero
                             new Thread(() -> ListFragment.listFragment.refreshUI()).start();
                             return;
                         } catch (IOException ex) {

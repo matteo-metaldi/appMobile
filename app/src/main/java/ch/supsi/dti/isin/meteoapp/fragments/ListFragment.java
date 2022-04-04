@@ -245,10 +245,9 @@ public class ListFragment extends Fragment {
 
 
         mAdapter.replaceLocations(locations);
-
-        //new Handler(Looper.getMainLooper()).post(()->mAdapter.notifyDataSetChanged());
     }
 
+    //Metodo che rimuove la location dal DB e richiama la refreshUI per aggiornare la visione
     private void removeLocationFromDB(Location mLocation){
         db.locationDao().deleteLocation(mLocation);
         refreshUI();

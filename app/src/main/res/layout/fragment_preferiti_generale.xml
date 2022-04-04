@@ -87,8 +87,11 @@
             android:id="@+id/currentLocation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="serif"
             android:text="TextView"
-            android:textSize="24sp"
+            android:textColor="#000000"
+            android:textSize="34sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
