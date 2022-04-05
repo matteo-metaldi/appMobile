@@ -117,9 +117,17 @@ public class MainActivity extends AppCompatActivity {
                             String addressComplete = addresses.get(0).getAddressLine(0);
                             String[] addressSplit = addressComplete.split(",");
 
-                            String countryName = addressSplit[3].trim();
-                            String[] cityPlusZipCode = addressSplit[2].split(" ");
 
+                            String countryName;
+                            String[] cityPlusZipCode;
+                            //TODO CHECK IF QUA CI SONO LUNGHEZZA DIVERSE
+                            if(addressSplit.length == 3){
+                                countryName = addressSplit[2].trim();
+                                cityPlusZipCode = addressSplit[1].split(" ");
+                            }else {
+                                countryName = addressSplit[3].trim();
+                                cityPlusZipCode = addressSplit[2].split(" ");
+                            }
                             String cityName = cityPlusZipCode[2].trim();
                             currentLocation.setName(cityName);
                             currentLocation.setCountry(countryName);
