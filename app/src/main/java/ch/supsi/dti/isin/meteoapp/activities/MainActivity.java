@@ -39,7 +39,7 @@ import io.nlopez.smartlocation.location.config.LocationAccuracy;
 import io.nlopez.smartlocation.location.config.LocationParams;
 
 public class MainActivity extends AppCompatActivity {
-    private Context context;
+    public static Context context;
     private static final String TAG = "SML_test";
     private static ch.supsi.dti.isin.meteoapp.model.Location currentLocation = new ch.supsi.dti.isin.meteoapp.model.Location();
     private LocationDatabase db;
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         db = LocationDatabase.getInstance(this);
 
+        context = MainActivity.this;
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "Permission not granted");
             requestPermissions();
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "Permission granted");
             startLocationListener();
         }
-        context = this;
+
 
         /*Richiede il fragment manager*/
         FragmentManager fm = getSupportFragmentManager();
